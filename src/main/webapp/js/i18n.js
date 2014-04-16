@@ -17,7 +17,7 @@ var i18n = (function($) {
 			if (!version || !message || JSON.parse(message).version != version) {
 				updateLocalI18n(key);
 			}
-			return localStorage.getItem(key);
+			return JSON.parse(localStorage.getItem(key)).message;
 		}
 	}
 })(window.jQuery||window.Zepto);
