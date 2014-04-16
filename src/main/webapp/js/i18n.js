@@ -4,17 +4,20 @@ var i18n = (function($) {
 			url: '/i18n/' + key,
 			async: false,
 			success: function(data) {
-				localStorage[data.key] = data.message;
+				sessionStorage.setItem("version", data.version);
+				localStorage.setItem(data.key, JSON.stringify(data));
 			}
 		});
 	}
 
 	return {
 		get: function(key) {
-			if (!localStorage[key]) {
+			var version = sessionStorage.getItem('version'),
+				message = localStorage.getItem(key);
+			if (!version || !message || JSON.parse(message).version != version) {
 				updateLocalI18n(key);
 			}
-			return localStorage[key];
+			return localStorage.getItem(key);
 		}
 	}
 })(window.jQuery||window.Zepto);
